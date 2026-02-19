@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Complaint - Samadhan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <i class="fas fa-hands-helping text-blue-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-800">Samadhan</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="register-complaint.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Register</a>
+                    <div id="userMenu" class="relative">
+                        <button id="userMenuBtn" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                            <i class="fas fa-user mr-2"></i>
+                            <span id="userName">Guest</span>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <button id="logoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Search Section -->
+        <div class="bg-white shadow-lg rounded-lg mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h1 class="text-2xl font-bold text-gray-900">Track Your Complaint</h1>
+                <p class="mt-1 text-sm text-gray-600">Enter your Unique Complaint Number (UCN) to track status</p>
+            </div>
+            
+            <div class="px-6 py-6">
+                <form id="trackForm" class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" id="ucnInput" name="ucn" required
+                               class="form-input block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                               placeholder="Enter UCN (e.g., UCN-XXXXX-XXXXX)">
+                        <div id="ucn-error" class="error-message mt-1" style="display: none;"></div>
+                    </div>
+                    <button type="submit" id="trackBtn"
+                            class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <i class="fas fa-search mr-2"></i>
+                        Track Complaint
+                    </button>
+                </form>
+                
+                <!-- Quick access for logged-in users -->
+                <div id="recentComplaints" class="mt-6 hidden">
+                    <h3 class="text-sm font-medium text-gray-700 mb-2">Recent Complaints:</h3>
+                    <div id="recentList" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="hidden">
+            <div class="bg-white shadow-lg rounded-lg p-8">
+                <div class="flex items-center justify-center">
+                    <div class="spinner"></div>
+                    <span class="ml-3 text-gray-600">Tracking complaint...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden">
+            <div class="bg-white shadow-lg rounded-lg p-8">
+                <div class="text-center">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Complaint Not Found</h3>
+                    <p class="text-gray-600" id="errorMessage">Please check your UCN and try again.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complaint Details -->
+        <div id="complaintDetails" class="hidden">
+            <!-- Status Card -->
+            <div class="bg-white shadow-lg rounded-lg mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-bold text-gray-900">Complaint Status</h2>
+                        <button id="downloadReceiptBtn" class="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                            <i class="fas fa-download mr-1"></i>
+                            Download Receipt
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="px-6 py-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 mb-1">Complaint Number</h3>
+                            <p class="text-lg font-semibold text-gray-900" id="detailUcn"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 mb-1">Current Status</h3>
+                            <span id="detailStatus" class="status-badge"></span>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 mb-1">Category</h3>
+                            <p class="text-gray-900" id="detailCategory"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 mb-1">Severity</h3>
+                            <span id="detailSeverity" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"></span>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 mb-1">Submitted On</h3>
+                            <p class="text-gray-900" id="detailSubmittedOn"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-500 mb-1">Last Updated</h3>
+                            <p class="text-gray-900" id="detailLastUpdated"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h3 class="text-sm font-medium text-gray-500 mb-1">Title</h3>
+                        <p class="text-gray-900 font-medium" id="detailTitle"></p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h3 class="text-sm font-medium text-gray-500 mb-1">Description</h3>
+                        <p class="text-gray-700" id="detailDescription"></p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h3 class="text-sm font-medium text-gray-500 mb-1">Address</h3>
+                        <p class="text-gray-700" id="detailAddress"></p>
+                    </div>
+                    
+                    <div id="assignedAuthoritySection" class="mt-4 hidden">
+                        <h3 class="text-sm font-medium text-gray-500 mb-1">Assigned Authority</h3>
+                        <p class="text-gray-700" id="detailAssignedAuthority"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="bg-white shadow-lg rounded-lg mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-bold text-gray-900">Status Timeline</h2>
+                </div>
+                
+                <div class="px-6 py-6">
+                    <div id="statusTimeline" class="timeline"></div>
+                </div>
+            </div>
+
+            <!-- Evidence -->
+            <div id="evidenceSection" class="bg-white shadow-lg rounded-lg hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-bold text-gray-900">Evidence</h2>
+                </div>
+                
+                <div class="px-6 py-6">
+                    <div id="evidenceGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Receipt Template -->
+    <div id="receiptTemplate" class="hidden print:block">
+        <div class="p-8">
+            <div class="text-center mb-8">
+                <h1 class="text-2xl font-bold">Samadhan Complaint Receipt</h1>
+                <p class="text-gray-600">Government of India</p>
+            </div>
+            
+            <div class="border-t border-b border-gray-300 py-4 mb-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-sm text-gray-600">Complaint Number:</p>
+                        <p class="font-bold" id="receiptUcn"></p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Date:</p>
+                        <p class="font-bold" id="receiptDate"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="receiptDetails"></div>
+        </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+    <script>
+        // Load user data
+        const user = Samadhan.Auth.getUser();
+        if (user) {
+            document.getElementById('userName').textContent = user.name;
+            loadRecentComplaints();
+        }
+
+        // User menu toggle
+        document.getElementById('userMenuBtn').addEventListener('click', function() {
+            document.getElementById('userDropdown').classList.toggle('hidden');
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            Samadhan.Auth.logout();
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.getElementById('userMenu');
+            if (!userMenu.contains(event.target)) {
+                document.getElementById('userDropdown').classList.add('hidden');
+            }
+        });
+
+        // Load recent complaints for logged-in user
+        async function loadRecentComplaints() {
+            try {
+                const response = await Samadhan.API.get('/complaints/my?limit=5');
+                if (response.success && response.data.complaints.length > 0) {
+                    const recentComplaints = document.getElementById('recentComplaints');
+                    const recentList = document.getElementById('recentList');
+                    
+                    response.data.complaints.forEach(complaint => {
+                        const chip = document.createElement('button');
+                        chip.className = 'px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200 transition-colors';
+                        chip.textContent = complaint.ucn;
+                        chip.onclick = () => trackComplaint(complaint.ucn);
+                        recentList.appendChild(chip);
+                    });
+                    
+                    recentComplaints.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Failed to load recent complaints:', error);
+            }
+        }
+
+        // Track complaint form submission
+        document.getElementById('trackForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const ucn = document.getElementById('ucnInput').value.trim();
+            
+            if (!ucn) {
+                Samadhan.FormValidator.showError('ucn', 'Please enter a UCN');
+                return;
+            }
+            
+            trackComplaint(ucn);
+        });
+
+        // Track complaint function
+        async function trackComplaint(ucn) {
+            // Clear previous errors
+            Samadhan.FormValidator.clearError('ucn');
+            
+            // Show loading
+            document.getElementById('loadingState').classList.remove('hidden');
+            document.getElementById('errorState').classList.add('hidden');
+            document.getElementById('complaintDetails').classList.add('hidden');
+            
+            try {
+                const response = await Samadhan.API.get(`/complaints/track/${ucn}`);
+                
+                if (response.success) {
+                    displayComplaintDetails(response.data);
+                    document.getElementById('loadingState').classList.add('hidden');
+                    document.getElementById('complaintDetails').classList.remove('hidden');
+                } else {
+                    throw new Error(response.message || 'Complaint not found');
+                }
+                
+            } catch (error) {
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('errorState').classList.remove('hidden');
+                document.getElementById('errorMessage').textContent = error.message || 'Failed to track complaint. Please try again.';
+            }
+        }
+
+        // Display complaint details
+        function displayComplaintDetails(complaint) {
+            // Basic details
+            document.getElementById('detailUcn').textContent = complaint.ucn;
+            document.getElementById('detailTitle').textContent = complaint.title;
+            document.getElementById('detailDescription').textContent = complaint.description;
+            document.getElementById('detailAddress').textContent = complaint.address;
+            document.getElementById('detailCategory').textContent = complaint.category_name;
+            document.getElementById('detailSubmittedOn').textContent = Samadhan.DateUtils.format(complaint.created_at);
+            document.getElementById('detailLastUpdated').textContent = Samadhan.DateUtils.format(complaint.updated_at);
+            
+            // Status badge
+            const statusElement = document.getElementById('detailStatus');
+            statusElement.textContent = complaint.status;
+            statusElement.className = `status-badge status-${complaint.status.toLowerCase().replace(/\s+/g, '-')}`;
+            
+            // Severity badge
+            const severityElement = document.getElementById('detailSeverity');
+            severityElement.textContent = complaint.severity;
+            severityElement.className = `inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                complaint.severity === 'High' ? 'bg-red-100 text-red-800' :
+                complaint.severity === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                'bg-green-100 text-green-800'
+            }`;
+            
+            // Assigned authority
+            if (complaint.assigned_authority) {
+                document.getElementById('assignedAuthoritySection').classList.remove('hidden');
+                document.getElementById('detailAssignedAuthority').textContent = complaint.assigned_authority;
+            } else {
+                document.getElementById('assignedAuthoritySection').classList.add('hidden');
+            }
+            
+            // Timeline
+            displayTimeline(complaint.statusHistory);
+            
+            // Evidence
+            if (complaint.media && complaint.media.length > 0) {
+                displayEvidence(complaint.media);
+                document.getElementById('evidenceSection').classList.remove('hidden');
+            } else {
+                document.getElementById('evidenceSection').classList.add('hidden');
+            }
+            
+            // Update input field
+            document.getElementById('ucnInput').value = complaint.ucn;
+        }
+
+        // Display timeline
+        function displayTimeline(statusHistory) {
+            const timeline = document.getElementById('statusTimeline');
+            timeline.innerHTML = '';
+            
+            statusHistory.forEach((item, index) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                
+                const statusColor = getStatusColor(item.new_status);
+                
+                timelineItem.innerHTML = `
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <div class="w-3 h-3 rounded-full" style="background-color: ${statusColor}"></div>
+                        </div>
+                        <div class="ml-4">
+                            <div class="flex items-center">
+                                <h4 class="text-sm font-medium text-gray-900">${item.new_status}</h4>
+                                <span class="ml-2 text-xs text-gray-500">${Samadhan.DateUtils.getTimeAgo(item.created_at)}</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">
+                                ${item.remarks || 'Status updated'}
+                                ${item.created_by_name ? ` by ${item.created_by_name}` : ''}
+                            </p>
+                            <p class="text-xs text-gray-500 mt-1">${Samadhan.DateUtils.format(item.created_at)}</p>
+                        </div>
+                    </div>
+                `;
+                
+                timeline.appendChild(timelineItem);
+            });
+        }
+
+        // Get status color
+        function getStatusColor(status) {
+            const colors = {
+                'Submitted': '#3B82F6',
+                'Under Review': '#F59E0B',
+                'Assigned to Authority': '#8B5CF6',
+                'In Progress': '#EC4899',
+                'Resolved': '#10B981',
+                'Escalated': '#EF4444'
+            };
+            return colors[status] || '#6B7280';
+        }
+
+        // Display evidence
+        function displayEvidence(media) {
+            const evidenceGrid = document.getElementById('evidenceGrid');
+            evidenceGrid.innerHTML = '';
+            
+            media.forEach(item => {
+                const evidenceItem = document.createElement('div');
+                evidenceItem.className = 'relative group';
+                
+                if (item.file_type === 'image') {
+                    evidenceItem.innerHTML = `
+                        <img src="/uploads/${item.file_name}" alt="Evidence" 
+                             class="w-full h-32 object-cover rounded-lg cursor-pointer"
+                             onclick="window.open('/uploads/${item.file_name}', '_blank')">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity rounded-lg flex items-center justify-center">
+                            <i class="fas fa-search-plus text-white opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1 truncate">${item.file_name}</p>
+                        <p class="text-xs text-gray-500">${formatFileSize(item.file_size)}</p>
+                    `;
+                } else {
+                    evidenceItem.innerHTML = `
+                        <div class="w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors"
+                             onclick="window.open('/uploads/${item.file_name}', '_blank')">
+                            <i class="fas fa-video text-gray-500 text-2xl"></i>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1 truncate">${item.file_name}</p>
+                        <p class="text-xs text-gray-500">${formatFileSize(item.file_size)}</p>
+                    `;
+                }
+                
+                evidenceGrid.appendChild(evidenceItem);
+            });
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Download receipt
+        document.getElementById('downloadReceiptBtn').addEventListener('click', function() {
+            const complaintData = {
+                ucn: document.getElementById('detailUcn').textContent,
+                title: document.getElementById('detailTitle').textContent,
+                category: document.getElementById('detailCategory').textContent,
+                status: document.getElementById('detailStatus').textContent,
+                submittedOn: document.getElementById('detailSubmittedOn').textContent,
+                address: document.getElementById('detailAddress').textContent
+            };
+            
+            // Fill receipt template
+            document.getElementById('receiptUcn').textContent = complaintData.ucn;
+            document.getElementById('receiptDate').textContent = new Date().toLocaleDateString('en-IN');
+            
+            const receiptDetails = document.getElementById('receiptDetails');
+            receiptDetails.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-gray-600">Title:</p>
+                        <p class="font-medium">${complaintData.title}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Category:</p>
+                        <p class="font-medium">${complaintData.category}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Status:</p>
+                        <p class="font-medium">${complaintData.status}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Address:</p>
+                        <p class="font-medium">${complaintData.address}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Submitted On:</p>
+                        <p class="font-medium">${complaintData.submittedOn}</p>
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-gray-600">This is an electronically generated receipt.</p>
+                    <p class="text-sm text-gray-600">No signature required.</p>
+                </div>
+            `;
+            
+            // Print
+            window.print();
+        });
+
+        // Auto-fill UCN from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const ucnParam = urlParams.get('ucn');
+        if (ucnParam) {
+            document.getElementById('ucnInput').value = ucnParam;
+            trackComplaint(ucnParam);
+        }
+    </script>
+</body>
+</html>

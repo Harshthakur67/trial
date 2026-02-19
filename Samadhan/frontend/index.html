@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samadhan - Raise Your Complaint Easily</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-hands-helping text-blue-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-800">Samadhan</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#home" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#features" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
+                        <a href="#how-it-works" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">How It Works</a>
+                        <a href="#faq" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">FAQ</a>
+                        <a href="#contact" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Login</a>
+                    <a href="register.html" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">Register</a>
+                    <button id="mobile-menu-button" class="md:hidden text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                <a href="#home" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#features" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Features</a>
+                <a href="#how-it-works" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
+                <a href="#faq" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <a href="login.html" class="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Login</a>
+                <a href="register.html" class="text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Raise Your Complaint Easily with Samadhan
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-blue-100">
+                    Your voice matters. Report issues, track progress, and get resolutions quickly.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="register-complaint.html" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors transform hover:scale-105">
+                        <i class="fas fa-plus-circle mr-2"></i>Register Complaint
+                    </a>
+                    <a href="track-complaint.html" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors transform hover:scale-105">
+                        <i class="fas fa-search mr-2"></i>Track Complaint
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V120Z" fill="#F9FAFB"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Samadhan?</h2>
+                <p class="text-xl text-gray-600">Experience transparent and efficient complaint resolution</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-search text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Track Progress</h3>
+                    <p class="text-gray-600">Monitor your complaint status in real-time with complete transparency</p>
+                </div>
+                <div class="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-arrow-up text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Escalate When Needed</h3>
+                    <p class="text-gray-600">Automatic escalation to higher authorities if issues aren't resolved on time</p>
+                </div>
+                <div class="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-eye text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Transparent Process</h3>
+                    <p class="text-gray-600">Complete visibility into the complaint resolution journey</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+                <p class="text-xl text-gray-600">Simple 3-step process to get your issues resolved</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="relative">
+                    <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">1</div>
+                        <h3 class="text-xl font-semibold mb-2">Register Complaint</h3>
+                        <p class="text-gray-600">Fill in details about your issue, upload evidence, and submit</p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">2</div>
+                        <h3 class="text-xl font-semibold mb-2">Track Progress</h3>
+                        <p class="text-gray-600">Monitor your complaint status and receive updates at each step</p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mb-4">3</div>
+                        <h3 class="text-xl font-semibold mb-2">Get Resolution</h3>
+                        <p class="text-gray-600">Receive timely resolution with automatic escalation if needed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600">Find answers to common questions</p>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <button class="faq-question w-full text-left flex justify-between items-center" onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-semibold">How do I register a complaint?</h3>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-600">
+                        Click on "Register Complaint" button, fill in the required details including category, description, and upload any evidence if available. You'll receive a unique complaint number for tracking.
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <button class="faq-question w-full text-left flex justify-between items-center" onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-semibold">How can I track my complaint status?</h3>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-600">
+                        Use your unique complaint number (UCN) on the "Track Complaint" page. You can see real-time status updates and timeline of actions taken.
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <button class="faq-question w-full text-left flex justify-between items-center" onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-semibold">What happens if my complaint is not resolved on time?</h3>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-600">
+                        Based on the severity level, complaints are automatically escalated to higher authorities if not resolved within the specified time frame (72 hours for high, 7 days for medium, 15 days for low severity).
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <button class="faq-question w-full text-left flex justify-between items-center" onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-semibold">Is my personal information secure?</h3>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-600">
+                        Yes, we use industry-standard security measures to protect your personal information. Your data is encrypted and only shared with relevant authorities for complaint resolution.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Get in Touch</h2>
+                <p class="text-xl text-gray-600">We're here to help you</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Helpline</h3>
+                    <p class="text-gray-600">1800-123-4567</p>
+                    <p class="text-gray-600">24/7 Support</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Email</h3>
+                    <p class="text-gray-600">support@samadhan.gov</p>
+                    <p class="text-gray-600">Response within 24 hours</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-map-marker-alt text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Office</h3>
+                    <p class="text-gray-600">Civil Services Building</p>
+                    <p class="text-gray-600">New Delhi, India</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-hands-helping text-blue-400 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold">Samadhan</span>
+                    </div>
+                    <p class="text-gray-400">Empowering citizens with transparent complaint resolution system.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="register-complaint.html" class="text-gray-400 hover:text-white">Register Complaint</a></li>
+                        <li><a href="track-complaint.html" class="text-gray-400 hover:text-white">Track Complaint</a></li>
+                        <li><a href="login.html" class="text-gray-400 hover:text-white">Login</a></li>
+                        <li><a href="register.html" class="text-gray-400 hover:text-white">Register</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#faq" class="text-gray-400 hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 Samadhan. All rights reserved. | Government of India</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>

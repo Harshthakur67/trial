@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Samadhan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <i class="fas fa-hands-helping text-blue-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-800">Samadhan</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="register.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <div class="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-blue-100">
+                    <i class="fas fa-sign-in-alt text-blue-600 text-xl"></i>
+                </div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    Sign in to your account
+                </h2>
+                <p class="mt-2 text-center text-sm text-gray-600">
+                    Or
+                    <a href="register.html" class="font-medium text-blue-600 hover:text-blue-500">
+                        create a new account
+                    </a>
+                </p>
+            </div>
+            
+            <form class="mt-8 space-y-6" id="loginForm">
+                <div id="error-message" class="error-alert hidden"></div>
+                <div id="success-message" class="success-message hidden"></div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input id="email" name="email" type="email" required
+                               class="form-input mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                               placeholder="Enter your email">
+                        <div id="email-error" class="error-message" style="display: none;"></div>
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <div class="relative">
+                            <input id="password" name="password" type="password" required
+                                   class="form-input mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="Enter your password">
+                            <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                            </button>
+                        </div>
+                        <div id="password-error" class="error-message" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember" name="remember" type="checkbox"
+                               class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="remember" class="ml-2 block text-sm text-gray-900">
+                            Remember me
+                        </label>
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="forgot-password.html" class="font-medium text-blue-600 hover:text-blue-500">
+                            Forgot your password?
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" id="submitBtn"
+                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 btn-hover">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <i class="fas fa-sign-in-alt text-blue-500 group-hover:text-blue-400"></i>
+                        </span>
+                        Sign In
+                    </button>
+                </div>
+
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-gray-50 text-gray-500">Or continue with</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <button type="button" id="adminLoginBtn"
+                                class="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fas fa-user-shield mr-2"></i>
+                            Admin Login
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // User login form submission
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            Samadhan.FormValidator.clearAllErrors();
+            
+            const formData = {
+                email: document.getElementById('email').value.trim(),
+                password: document.getElementById('password').value
+            };
+            
+            // Validation
+            let hasError = false;
+            
+            if (!Samadhan.FormValidator.validateEmail(formData.email)) {
+                Samadhan.FormValidator.showError('email', 'Please enter a valid email address');
+                hasError = true;
+            }
+            
+            if (!formData.password) {
+                Samadhan.FormValidator.showError('password', 'Password is required');
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // Show loading
+            const submitBtn = document.getElementById('submitBtn');
+            const originalContent = submitBtn.innerHTML;
+            Samadhan.Loading.show('submitBtn');
+            
+            try {
+                const response = await Samadhan.API.post('/auth/login', formData);
+                
+                // Store user data
+                Samadhan.Auth.login(response.data.token, response.data);
+                
+                // Show success message
+                document.getElementById('success-message').textContent = 'Login successful! Redirecting to dashboard...';
+                document.getElementById('success-message').classList.remove('hidden');
+                
+                // Redirect to dashboard after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+                
+            } catch (error) {
+                document.getElementById('error-message').textContent = error.message || 'Login failed. Please check your credentials.';
+                document.getElementById('error-message').classList.remove('hidden');
+                
+                // Reset button
+                Samadhan.Loading.hide('submitBtn', originalContent);
+            }
+        });
+
+        // Admin login
+        document.getElementById('adminLoginBtn').addEventListener('click', function() {
+            // Change form to admin login mode
+            const form = document.getElementById('loginForm');
+            const title = document.querySelector('h2');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            title.textContent = 'Admin Sign In';
+            submitBtn.innerHTML = `
+                <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                    <i class="fas fa-user-shield text-blue-500 group-hover:text-blue-400"></i>
+                </span>
+                Admin Sign In
+            `;
+            
+            // Change email field to username
+            const emailLabel = document.querySelector('label[for="email"]');
+            const emailInput = document.getElementById('email');
+            emailLabel.textContent = 'Username';
+            emailInput.placeholder = 'Enter your admin username';
+            emailInput.type = 'text';
+            
+            // Update form submission handler
+            form.removeEventListener('submit', arguments.callee);
+            form.addEventListener('submit', handleAdminLogin);
+            
+            // Hide admin login button
+            this.style.display = 'none';
+        });
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            Samadhan.FormValidator.clearAllErrors();
+            
+            const formData = {
+                username: document.getElementById('email').value.trim(),
+                password: document.getElementById('password').value
+            };
+            
+            // Validation
+            let hasError = false;
+            
+            if (!formData.username) {
+                Samadhan.FormValidator.showError('email', 'Username is required');
+                hasError = true;
+            }
+            
+            if (!formData.password) {
+                Samadhan.FormValidator.showError('password', 'Password is required');
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // Show loading
+            const submitBtn = document.getElementById('submitBtn');
+            const originalContent = submitBtn.innerHTML;
+            Samadhan.Loading.show('submitBtn');
+            
+            try {
+                const response = await Samadhan.API.post('/auth/admin/login', formData);
+                
+                // Store admin data
+                Samadhan.Auth.login(response.data.token, response.data);
+                
+                // Show success message
+                document.getElementById('success-message').textContent = 'Admin login successful! Redirecting to admin dashboard...';
+                document.getElementById('success-message').classList.remove('hidden');
+                
+                // Redirect to admin dashboard after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'admin/dashboard.html';
+                }, 2000);
+                
+            } catch (error) {
+                document.getElementById('error-message').textContent = error.message || 'Admin login failed. Please check your credentials.';
+                document.getElementById('error-message').classList.remove('hidden');
+                
+                // Reset button
+                Samadhan.Loading.hide('submitBtn', originalContent);
+            }
+        }
+        
+        // Real-time validation
+        document.getElementById('email').addEventListener('blur', function() {
+            if (this.type === 'email' && this.value && !Samadhan.FormValidator.validateEmail(this.value)) {
+                Samadhan.FormValidator.showError('email', 'Please enter a valid email address');
+            } else {
+                Samadhan.FormValidator.clearError('email');
+            }
+        });
+    </script>
+</body>
+</html>

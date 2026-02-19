@@ -1,0 +1,30 @@
+{
+  "name": "samadhan",
+  "version": "1.0.0",
+  "description": "Citizen Complaint Management System",
+  "main": "setup.js",
+  "scripts": {
+    "setup": "node setup.js",
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "install-deps": "cd backend && npm install",
+    "serve": "cd frontend && npx serve -s . -l 5500"
+  },
+  "keywords": [
+    "complaint",
+    "management",
+    "government",
+    "citizen",
+    "nodejs",
+    "mysql"
+  ],
+  "author": "Samadhan Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samadhan/complaint-management.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

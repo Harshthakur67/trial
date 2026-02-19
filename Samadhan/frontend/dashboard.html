@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Samadhan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <i class="fas fa-hands-helping text-blue-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-800">Samadhan</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="register-complaint.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Register</a>
+                    <a href="track-complaint.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Track</a>
+                    <div id="userMenu" class="relative">
+                        <button id="userMenuBtn" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                            <i class="fas fa-user mr-2"></i>
+                            <span id="userName">User</span>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <button id="logoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="md:hidden bg-white border-t">
+        <div class="flex justify-around py-2">
+            <a href="dashboard.html" class="flex flex-col items-center p-2 text-blue-600">
+                <i class="fas fa-home text-xl"></i>
+                <span class="text-xs mt-1">Home</span>
+            </a>
+            <a href="register-complaint.html" class="flex flex-col items-center p-2 text-gray-600">
+                <i class="fas fa-plus text-xl"></i>
+                <span class="text-xs mt-1">Register</span>
+            </a>
+            <a href="track-complaint.html" class="flex flex-col items-center p-2 text-gray-600">
+                <i class="fas fa-search text-xl"></i>
+                <span class="text-xs mt-1">Track</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center p-2 text-gray-600">
+                <i class="fas fa-user text-xl"></i>
+                <span class="text-xs mt-1">Profile</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Welcome Section -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg p-6 mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold mb-2">Welcome back, <span id="welcomeName">User</span>!</h1>
+                    <p class="text-blue-100">Manage your complaints and track their progress</p>
+                </div>
+                <a href="register-complaint.html" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-plus-circle mr-2"></i>New Complaint
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 bg-blue-100 rounded-full">
+                        <i class="fas fa-clipboard-list text-blue-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Total Complaints</p>
+                        <p class="text-2xl font-bold text-gray-900" id="totalComplaints">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 bg-yellow-100 rounded-full">
+                        <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Pending</p>
+                        <p class="text-2xl font-bold text-gray-900" id="pendingComplaints">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 bg-green-100 rounded-full">
+                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Resolved</p>
+                        <p class="text-2xl font-bold text-gray-900" id="resolvedComplaints">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 bg-red-100 rounded-full">
+                        <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Escalated</p>
+                        <p class="text-2xl font-bold text-gray-900" id="escalatedComplaints">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Complaints -->
+        <div class="bg-white shadow-lg rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-gray-900">Recent Complaints</h2>
+                    <div class="flex items-center space-x-4">
+                        <select id="statusFilter" class="form-input text-sm border-gray-300 rounded-md">
+                            <option value="">All Status</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Under Review">Under Review</option>
+                            <option value="Assigned to Authority">Assigned</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Escalated">Escalated</option>
+                        </select>
+                        <select id="severityFilter" class="form-input text-sm border-gray-300 rounded-md">
+                            <option value="">All Severity</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UCN</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severity</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="complaintsTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Complaints will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loadingState" class="hidden px-6 py-8">
+                <div class="flex items-center justify-center">
+                    <div class="spinner"></div>
+                    <span class="ml-3 text-gray-600">Loading complaints...</span>
+                </div>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden px-6 py-8">
+                <div class="text-center">
+                    <i class="fas fa-clipboard-list text-gray-400 text-4xl mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">No complaints found</h3>
+                    <p class="text-gray-600 mb-4">You haven't registered any complaints yet.</p>
+                    <a href="register-complaint.html" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Register Your First Complaint
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="px-6 py-4 border-t border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-700">
+                        Showing <span id="showingFrom">0</span> to <span id="showingTo">0</span> of <span id="totalItems">0</span> results
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button id="prevPage" class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50 disabled:opacity-50" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span id="currentPage" class="px-3 py-1 text-sm">Page 1</span>
+                        <button id="nextPage" class="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50 disabled:opacity-50" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg shadow p-6 text-center card-hover">
+                <i class="fas fa-plus-circle text-blue-600 text-3xl mb-4"></i>
+                <h3 class="text-lg font-semibold mb-2">Register New Complaint</h3>
+                <p class="text-gray-600 mb-4">File a new complaint about any issue</p>
+                <a href="register-complaint.html" class="text-blue-600 hover:text-blue-700 font-medium">
+                    Register Now <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 text-center card-hover">
+                <i class="fas fa-search text-green-600 text-3xl mb-4"></i>
+                <h3 class="text-lg font-semibold mb-2">Track Complaint</h3>
+                <p class="text-gray-600 mb-4">Check the status of your complaints</p>
+                <a href="track-complaint.html" class="text-green-600 hover:text-green-700 font-medium">
+                    Track Now <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 text-center card-hover">
+                <i class="fas fa-user-edit text-purple-600 text-3xl mb-4"></i>
+                <h3 class="text-lg font-semibold mb-2">Update Profile</h3>
+                <p class="text-gray-600 mb-4">Manage your personal information</p>
+                <a href="profile.html" class="text-purple-600 hover:text-purple-700 font-medium">
+                    Update Now <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+    <script>
+        // Check authentication
+        if (!Samadhan.Auth.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+
+        // Load user data
+        const user = Samadhan.Auth.getUser();
+        if (user) {
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('welcomeName').textContent = user.name.split(' ')[0];
+        }
+
+        // User menu toggle
+        document.getElementById('userMenuBtn').addEventListener('click', function() {
+            document.getElementById('userDropdown').classList.toggle('hidden');
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            Samadhan.Auth.logout();
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.getElementById('userMenu');
+            if (!userMenu.contains(event.target)) {
+                document.getElementById('userDropdown').classList.add('hidden');
+            }
+        });
+
+        // Global variables
+        let currentPage = 1;
+        const limit = 10;
+        let totalPages = 1;
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                // Load statistics
+                const statsResponse = await Samadhan.API.get('/complaints/stats/my');
+                if (statsResponse.success) {
+                    const stats = statsResponse.data;
+                    document.getElementById('totalComplaints').textContent = stats.total || 0;
+                    document.getElementById('pendingComplaints').textContent = (stats.submitted + stats.under_review + stats.assigned + stats.in_progress) || 0;
+                    document.getElementById('resolvedComplaints').textContent = stats.resolved || 0;
+                    document.getElementById('escalatedComplaints').textContent = stats.escalated || 0;
+                }
+
+                // Load complaints
+                await loadComplaints();
+            } catch (error) {
+                console.error('Failed to load dashboard data:', error);
+                Samadhan.Notification.error('Failed to load dashboard data');
+            }
+        }
+
+        // Load complaints
+        async function loadComplaints() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const severityFilter = document.getElementById('severityFilter').value;
+
+            const queryParams = new URLSearchParams({
+                page: currentPage,
+                limit: limit
+            });
+
+            if (statusFilter) queryParams.append('status', statusFilter);
+            if (severityFilter) queryParams.append('severity', severityFilter);
+
+            try {
+                document.getElementById('loadingState').classList.remove('hidden');
+                document.getElementById('emptyState').classList.add('hidden');
+                document.getElementById('complaintsTableBody').innerHTML = '';
+
+                const response = await Samadhan.API.get(`/complaints/my?${queryParams}`);
+                
+                if (response.success) {
+                    const { complaints, pagination } = response.data;
+                    
+                    if (complaints.length === 0) {
+                        document.getElementById('emptyState').classList.remove('hidden');
+                        document.getElementById('pagination').classList.add('hidden');
+                    } else {
+                        displayComplaints(complaints);
+                        updatePagination(pagination);
+                        document.getElementById('pagination').classList.remove('hidden');
+                    }
+                } else {
+                    throw new Error(response.message || 'Failed to load complaints');
+                }
+            } catch (error) {
+                console.error('Failed to load complaints:', error);
+                Samadhan.Notification.error('Failed to load complaints');
+            } finally {
+                document.getElementById('loadingState').classList.add('hidden');
+            }
+        }
+
+        // Display complaints in table
+        function displayComplaints(complaints) {
+            const tbody = document.getElementById('complaintsTableBody');
+            tbody.innerHTML = '';
+
+            complaints.forEach(complaint => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                
+                const statusBadgeClass = getStatusBadgeClass(complaint.status);
+                const severityBadgeClass = getSeverityBadgeClass(complaint.severity);
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        ${complaint.ucn}
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-900">
+                        <div class="max-w-xs truncate" title="${complaint.title}">
+                            ${complaint.title}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        ${complaint.category_name}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge ${statusBadgeClass}">
+                            ${complaint.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${severityBadgeClass}">
+                            ${complaint.severity}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        ${Samadhan.DateUtils.formatShort(complaint.created_at)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="viewComplaint(${complaint.id})" class="text-blue-600 hover:text-blue-900 mr-3">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button onclick="trackComplaint('${complaint.ucn}')" class="text-green-600 hover:text-green-900">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Get status badge class
+        function getStatusBadgeClass(status) {
+            const statusMap = {
+                'Submitted': 'status-submitted',
+                'Under Review': 'status-under-review',
+                'Assigned to Authority': 'status-assigned',
+                'In Progress': 'status-in-progress',
+                'Resolved': 'status-resolved',
+                'Escalated': 'status-escalated'
+            };
+            return statusMap[status] || 'status-submitted';
+        }
+
+        // Get severity badge class
+        function getSeverityBadgeClass(severity) {
+            const severityMap = {
+                'High': 'bg-red-100 text-red-800',
+                'Medium': 'bg-yellow-100 text-yellow-800',
+                'Low': 'bg-green-100 text-green-800'
+            };
+            return severityMap[severity] || 'bg-gray-100 text-gray-800';
+        }
+
+        // Update pagination
+        function updatePagination(pagination) {
+            currentPage = pagination.currentPage;
+            totalPages = pagination.totalPages;
+            const total = pagination.total;
+            
+            const from = (currentPage - 1) * limit + 1;
+            const to = Math.min(currentPage * limit, total);
+            
+            document.getElementById('showingFrom').textContent = from;
+            document.getElementById('showingTo').textContent = to;
+            document.getElementById('totalItems').textContent = total;
+            document.getElementById('currentPage').textContent = `Page ${currentPage} of ${totalPages}`;
+            
+            // Update button states
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages;
+        }
+
+        // View complaint details
+        function viewComplaint(complaintId) {
+            window.location.href = `complaint-detail.html?id=${complaintId}`;
+        }
+
+        // Track complaint
+        function trackComplaint(ucn) {
+            window.location.href = `track-complaint.html?ucn=${ucn}`;
+        }
+
+        // Event listeners
+        document.getElementById('statusFilter').addEventListener('change', function() {
+            currentPage = 1;
+            loadComplaints();
+        });
+
+        document.getElementById('severityFilter').addEventListener('change', function() {
+            currentPage = 1;
+            loadComplaints();
+        });
+
+        document.getElementById('prevPage').addEventListener('click', function() {
+            if (currentPage > 1) {
+                currentPage--;
+                loadComplaints();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', function() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                loadComplaints();
+            }
+        });
+
+        // Initialize dashboard
+        loadDashboardData();
+    </script>
+</body>
+</html>

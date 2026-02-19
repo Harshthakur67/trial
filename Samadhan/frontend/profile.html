@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Samadhan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <i class="fas fa-hands-helping text-blue-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-800">Samadhan</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="register-complaint.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Register</a>
+                    <a href="track-complaint.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Track</a>
+                    <div id="userMenu" class="relative">
+                        <button id="userMenuBtn" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                            <i class="fas fa-user mr-2"></i>
+                            <span id="userName">User</span>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <button id="logoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-lg rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h1 class="text-2xl font-bold text-gray-900">My Profile</h1>
+                <p class="mt-1 text-sm text-gray-600">Manage your personal information and account settings</p>
+            </div>
+            
+            <div class="p-6">
+                <!-- Profile Tabs -->
+                <div class="border-b border-gray-200 mb-6">
+                    <nav class="-mb-px flex space-x-8">
+                        <button class="tab-btn active py-2 px-1 border-b-2 border-blue-500 font-medium text-sm text-blue-600" data-tab="personal">
+                            Personal Information
+                        </button>
+                        <button class="tab-btn py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="security">
+                            Security
+                        </button>
+                        <button class="tab-btn py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="notifications">
+                            Notifications
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Personal Information Tab -->
+                <div id="personal-tab" class="tab-content">
+                    <form id="profileForm" class="space-y-6">
+                        <div id="profileSuccessMessage" class="success-message hidden"></div>
+                        <div id="profileErrorMessage" class="error-alert hidden"></div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                                <input type="text" id="name" name="name" required
+                                       class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <div id="name-error" class="error-message mt-1" style="display: none;"></div>
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                                <input type="email" id="email" name="email" required
+                                       class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <div id="email-error" class="error-message mt-1" style="display: none;"></div>
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required
+                                       class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <div id="phone-error" class="error-message mt-1" style="display: none;"></div>
+                            </div>
+                            
+                            <div>
+                                <label for="dateOfBirth" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth"
+                                       class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                            <textarea id="address" name="address" rows="3"
+                                      class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+                            <select id="gender" name="gender"
+                                    class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex justify-end">
+                            <button type="submit" id="updateProfileBtn"
+                                    class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <i class="fas fa-save mr-2"></i>
+                                Update Profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Security Tab -->
+                <div id="security-tab" class="tab-content hidden">
+                    <form id="passwordForm" class="space-y-6">
+                        <div id="passwordSuccessMessage" class="success-message hidden"></div>
+                        <div id="passwordErrorMessage" class="error-alert hidden"></div>
+                        
+                        <div>
+                            <label for="currentPassword" class="block text-sm font-medium text-gray-700">Current Password</label>
+                            <input type="password" id="currentPassword" name="currentPassword" required
+                                   class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <div id="currentPassword-error" class="error-message mt-1" style="display: none;"></div>
+                        </div>
+                        
+                        <div>
+                            <label for="newPassword" class="block text-sm font-medium text-gray-700">New Password</label>
+                            <input type="password" id="newPassword" name="newPassword" required
+                                   class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <div id="newPassword-error" class="error-message mt-1" style="display: none;"></div>
+                            <p class="mt-1 text-sm text-gray-500">Password must be at least 6 characters long</p>
+                        </div>
+                        
+                        <div>
+                            <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required
+                                   class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <div id="confirmPassword-error" class="error-message mt-1" style="display: none;"></div>
+                        </div>
+                        
+                        <div class="flex justify-end">
+                            <button type="submit" id="updatePasswordBtn"
+                                    class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <i class="fas fa-lock mr-2"></i>
+                                Change Password
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Notifications Tab -->
+                <div id="notifications-tab" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-medium text-gray-900">Recent Notifications</h3>
+                            <button id="markAllReadBtn" class="text-sm text-blue-600 hover:text-blue-700">
+                                Mark all as read
+                            </button>
+                        </div>
+                        
+                        <div id="notificationsList" class="space-y-3">
+                            <!-- Notifications will be loaded here -->
+                        </div>
+                        
+                        <div id="noNotifications" class="hidden text-center py-8">
+                            <i class="fas fa-bell text-gray-400 text-4xl mb-4"></i>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">No notifications</h3>
+                            <p class="text-gray-600">You don't have any notifications yet.</p>
+                        </div>
+                        
+                        <div class="flex justify-center">
+                            <button id="loadMoreNotificationsBtn" class="hidden px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                Load More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+    <script>
+        // Check authentication
+        if (!Samadhan.Auth.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+
+        // Load user data
+        const user = Samadhan.Auth.getUser();
+        if (user) {
+            document.getElementById('userName').textContent = user.name;
+        }
+
+        // User menu toggle
+        document.getElementById('userMenuBtn').addEventListener('click', function() {
+            document.getElementById('userDropdown').classList.toggle('hidden');
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            Samadhan.Auth.logout();
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.getElementById('userMenu');
+            if (!userMenu.contains(event.target)) {
+                document.getElementById('userDropdown').classList.add('hidden');
+            }
+        });
+
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetTab = this.dataset.tab;
+                
+                // Update button states
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active', 'border-blue-500', 'text-blue-600');
+                    btn.classList.add('border-transparent', 'text-gray-500');
+                });
+                this.classList.add('active', 'border-blue-500', 'text-blue-600');
+                this.classList.remove('border-transparent', 'text-gray-500');
+                
+                // Show/hide content
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(`${targetTab}-tab`).classList.remove('hidden');
+                
+                // Load specific tab data
+                if (targetTab === 'notifications') {
+                    loadNotifications();
+                }
+            });
+        });
+
+        // Load profile data
+        async function loadProfileData() {
+            try {
+                const response = await Samadhan.API.get('/users/profile');
+                if (response.success) {
+                    const profile = response.data;
+                    document.getElementById('name').value = profile.name || '';
+                    document.getElementById('email').value = profile.email || '';
+                    document.getElementById('phone').value = profile.phone || '';
+                    document.getElementById('address').value = profile.address || '';
+                    document.getElementById('dateOfBirth').value = profile.date_of_birth ? profile.date_of_birth.split('T')[0] : '';
+                    document.getElementById('gender').value = profile.gender || '';
+                }
+            } catch (error) {
+                console.error('Failed to load profile data:', error);
+                Samadhan.Notification.error('Failed to load profile data');
+            }
+        }
+
+        // Update profile form submission
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            Samadhan.FormValidator.clearAllErrors();
+            
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                gender: document.getElementById('gender').value
+            };
+            
+            // Validation
+            let hasError = false;
+            
+            if (formData.name.length < 2) {
+                Samadhan.FormValidator.showError('name', 'Name must be at least 2 characters');
+                hasError = true;
+            }
+            
+            if (!Samadhan.FormValidator.validateEmail(formData.email)) {
+                Samadhan.FormValidator.showError('email', 'Please enter a valid email address');
+                hasError = true;
+            }
+            
+            if (!Samadhan.FormValidator.validatePhone(formData.phone)) {
+                Samadhan.FormValidator.showError('phone', 'Please enter a valid 10-digit phone number');
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // Show loading
+            const submitBtn = document.getElementById('updateProfileBtn');
+            const originalContent = submitBtn.innerHTML;
+            Samadhan.Loading.show('updateProfileBtn');
+            
+            try {
+                const response = await Samadhan.API.put('/users/profile', formData);
+                
+                if (response.success) {
+                    document.getElementById('profileSuccessMessage').textContent = 'Profile updated successfully!';
+                    document.getElementById('profileSuccessMessage').classList.remove('hidden');
+                    
+                    // Update stored user data
+                    const updatedUser = { ...user, ...response.data };
+                    localStorage.setItem('samadhan_user', JSON.stringify(updatedUser));
+                    document.getElementById('userName').textContent = updatedUser.name;
+                    
+                    // Hide success message after 3 seconds
+                    setTimeout(() => {
+                        document.getElementById('profileSuccessMessage').classList.add('hidden');
+                    }, 3000);
+                } else {
+                    throw new Error(response.message || 'Failed to update profile');
+                }
+            } catch (error) {
+                document.getElementById('profileErrorMessage').textContent = error.message || 'Failed to update profile';
+                document.getElementById('profileErrorMessage').classList.remove('hidden');
+            } finally {
+                Samadhan.Loading.hide('updateProfileBtn', originalContent);
+            }
+        });
+
+        // Change password form submission
+        document.getElementById('passwordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            Samadhan.FormValidator.clearAllErrors();
+            
+            const formData = {
+                currentPassword: document.getElementById('currentPassword').value,
+                newPassword: document.getElementById('newPassword').value,
+                confirmPassword: document.getElementById('confirmPassword').value
+            };
+            
+            // Validation
+            let hasError = false;
+            
+            if (!formData.currentPassword) {
+                Samadhan.FormValidator.showError('currentPassword', 'Current password is required');
+                hasError = true;
+            }
+            
+            if (!Samadhan.FormValidator.validatePassword(formData.newPassword)) {
+                Samadhan.FormValidator.showError('newPassword', 'Password must be at least 6 characters');
+                hasError = true;
+            }
+            
+            if (formData.newPassword !== formData.confirmPassword) {
+                Samadhan.FormValidator.showError('confirmPassword', 'Passwords do not match');
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // Show loading
+            const submitBtn = document.getElementById('updatePasswordBtn');
+            const originalContent = submitBtn.innerHTML;
+            Samadhan.Loading.show('updatePasswordBtn');
+            
+            try {
+                const response = await Samadhan.API.put('/users/password', {
+                    currentPassword: formData.currentPassword,
+                    newPassword: formData.newPassword
+                });
+                
+                if (response.success) {
+                    document.getElementById('passwordSuccessMessage').textContent = 'Password changed successfully!';
+                    document.getElementById('passwordSuccessMessage').classList.remove('hidden');
+                    
+                    // Clear form
+                    document.getElementById('passwordForm').reset();
+                    
+                    // Hide success message after 3 seconds
+                    setTimeout(() => {
+                        document.getElementById('passwordSuccessMessage').classList.add('hidden');
+                    }, 3000);
+                } else {
+                    throw new Error(response.message || 'Failed to change password');
+                }
+            } catch (error) {
+                document.getElementById('passwordErrorMessage').textContent = error.message || 'Failed to change password';
+                document.getElementById('passwordErrorMessage').classList.remove('hidden');
+            } finally {
+                Samadhan.Loading.hide('updatePasswordBtn', originalContent);
+            }
+        });
+
+        // Load notifications
+        let notificationsPage = 1;
+        async function loadNotifications() {
+            try {
+                const response = await Samadhan.API.get(`/users/notifications?page=${notificationsPage}&limit=10`);
+                
+                if (response.success) {
+                    const { notifications, pagination } = response.data;
+                    displayNotifications(notifications);
+                    
+                    if (pagination.currentPage < pagination.totalPages) {
+                        document.getElementById('loadMoreNotificationsBtn').classList.remove('hidden');
+                    } else {
+                        document.getElementById('loadMoreNotificationsBtn').classList.add('hidden');
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load notifications:', error);
+            }
+        }
+
+        // Display notifications
+        function displayNotifications(notifications) {
+            const notificationsList = document.getElementById('notificationsList');
+            const noNotifications = document.getElementById('noNotifications');
+            
+            if (notifications.length === 0 && notificationsPage === 1) {
+                notificationsList.innerHTML = '';
+                noNotifications.classList.remove('hidden');
+                return;
+            }
+            
+            noNotifications.classList.add('hidden');
+            
+            notifications.forEach(notification => {
+                const notificationItem = document.createElement('div');
+                notificationItem.className = `p-4 rounded-lg border ${notification.is_read ? 'bg-white border-gray-200' : 'bg-blue-50 border-blue-200'}`;
+                
+                const iconClass = getNotificationIcon(notification.type);
+                
+                notificationItem.innerHTML = `
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="${iconClass} text-lg ${notification.is_read ? 'text-gray-400' : 'text-blue-600'}"></i>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <h4 class="text-sm font-medium text-gray-900">${notification.title}</h4>
+                            <p class="text-sm text-gray-600 mt-1">${notification.message}</p>
+                            <p class="text-xs text-gray-500 mt-2">${Samadhan.DateUtils.getTimeAgo(notification.created_at)}</p>
+                        </div>
+                        <div class="flex-shrink-0 ml-4">
+                            ${!notification.is_read ? `
+                                <button onclick="markAsRead(${notification.id})" class="text-blue-600 hover:text-blue-700 text-sm">
+                                    Mark as read
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                notificationsList.appendChild(notificationItem);
+            });
+        }
+
+        // Get notification icon
+        function getNotificationIcon(type) {
+            const icons = {
+                'submission': 'fas fa-plus-circle',
+                'status_change': 'fas fa-sync-alt',
+                'escalation': 'fas fa-exclamation-triangle',
+                'resolution': 'fas fa-check-circle'
+            };
+            return icons[type] || 'fas fa-bell';
+        }
+
+        // Mark notification as read
+        async function markAsRead(notificationId) {
+            try {
+                await Samadhan.API.put(`/users/notifications/${notificationId}/read`);
+                // Reload notifications
+                notificationsPage = 1;
+                document.getElementById('notificationsList').innerHTML = '';
+                loadNotifications();
+            } catch (error) {
+                console.error('Failed to mark notification as read:', error);
+            }
+        }
+
+        // Mark all notifications as read
+        document.getElementById('markAllReadBtn').addEventListener('click', async function() {
+            try {
+                await Samadhan.API.put('/users/notifications/read-all');
+                notificationsPage = 1;
+                document.getElementById('notificationsList').innerHTML = '';
+                loadNotifications();
+                Samadhan.Notification.success('All notifications marked as read');
+            } catch (error) {
+                console.error('Failed to mark all notifications as read:', error);
+            }
+        });
+
+        // Load more notifications
+        document.getElementById('loadMoreNotificationsBtn').addEventListener('click', function() {
+            notificationsPage++;
+            loadNotifications();
+        });
+
+        // Initialize
+        loadProfileData();
+    </script>
+</body>
+</html>

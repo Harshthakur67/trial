@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Complaint - Samadhan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <i class="fas fa-hands-helping text-blue-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-800">Samadhan</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="track-complaint.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Track</a>
+                    <div id="userMenu" class="relative">
+                        <button id="userMenuBtn" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                            <i class="fas fa-user mr-2"></i>
+                            <span id="userName">User</span>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <button id="logoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-lg rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h1 class="text-2xl font-bold text-gray-900">Register New Complaint</h1>
+                <p class="mt-1 text-sm text-gray-600">Fill in the details below to register your complaint</p>
+            </div>
+            
+            <form id="complaintForm" class="px-6 py-6">
+                <div id="error-message" class="error-alert hidden mb-4"></div>
+                <div id="success-message" class="success-message hidden mb-4"></div>
+                
+                <!-- Personal Information -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-user text-blue-600 mr-2"></i>
+                        Personal Information
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="complainantName" class="block text-sm font-medium text-gray-700">Full Name *</label>
+                            <input type="text" id="complainantName" name="complainantName" required
+                                   class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="Enter your full name">
+                            <div id="complainantName-error" class="error-message" style="display: none;"></div>
+                        </div>
+                        <div>
+                            <label for="complainantPhone" class="block text-sm font-medium text-gray-700">Phone Number *</label>
+                            <input type="tel" id="complainantPhone" name="complainantPhone" required
+                                   class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="Enter your 10-digit phone number">
+                            <div id="complainantPhone-error" class="error-message" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complaint Details -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-exclamation-triangle text-blue-600 mr-2"></i>
+                        Complaint Details
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="title" class="block text-sm font-medium text-gray-700">Complaint Title *</label>
+                            <input type="text" id="title" name="title" required
+                                   class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="Brief title of your complaint">
+                            <div id="title-error" class="error-message" style="display: none;"></div>
+                        </div>
+                        
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-700">Category *</label>
+                            <select id="category" name="category" required
+                                    class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select a category</option>
+                                <option value="1">Water</option>
+                                <option value="2">Electricity</option>
+                                <option value="3">Road</option>
+                                <option value="4">Sanitation</option>
+                                <option value="5">Other</option>
+                            </select>
+                            <div id="category-error" class="error-message" style="display: none;"></div>
+                        </div>
+                        
+                        <div>
+                            <label for="description" class="block text-sm font-medium text-gray-700">Detailed Description *</label>
+                            <textarea id="description" name="description" rows="4" required
+                                      class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                      placeholder="Please provide detailed information about the issue you are facing"></textarea>
+                            <div id="description-error" class="error-message" style="display: none;"></div>
+                        </div>
+                        
+                        <div>
+                            <label for="severity" class="block text-sm font-medium text-gray-700">Severity Level *</label>
+                            <div class="mt-2 space-y-2">
+                                <label class="flex items-center">
+                                    <input type="radio" name="severity" value="Low" class="mr-2">
+                                    <span class="flex items-center">
+                                        <span class="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                                        Low - Minor issue, not urgent
+                                    </span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="severity" value="Medium" class="mr-2">
+                                    <span class="flex items-center">
+                                        <span class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>
+                                        Medium - Affects daily routine
+                                    </span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="severity" value="High" class="mr-2">
+                                    <span class="flex items-center">
+                                        <span class="w-3 h-3 bg-red-500 rounded-full mr-2"></span>
+                                        High - Urgent, needs immediate attention
+                                    </span>
+                                </label>
+                            </div>
+                            <div id="severity-error" class="error-message" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location Information -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
+                        Location Information
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-gray-700">Address of Issue *</label>
+                            <textarea id="address" name="address" rows="2" required
+                                      class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                      placeholder="Enter the complete address where the issue is located"></textarea>
+                            <div id="address-error" class="error-message" style="display: none;"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
+                                <input type="text" id="latitude" name="latitude" readonly
+                                       class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 bg-gray-50 rounded-md shadow-sm"
+                                       placeholder="Auto-detected or manual entry">
+                            </div>
+                            <div>
+                                <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
+                                <input type="text" id="longitude" name="longitude" readonly
+                                       class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 bg-gray-50 rounded-md shadow-sm"
+                                       placeholder="Auto-detected or manual entry">
+                            </div>
+                        </div>
+                        
+                        <button type="button" id="detectLocationBtn" 
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fas fa-location-arrow mr-2"></i>
+                            Detect My Location
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Evidence Upload -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fas fa-camera text-blue-600 mr-2"></i>
+                        Evidence (Optional)
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label for="imageUpload" class="block text-sm font-medium text-gray-700">Upload Images</label>
+                            <input type="file" id="imageUpload" name="imageUpload" multiple accept="image/*"
+                                   class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <p class="mt-1 text-sm text-gray-500">You can upload multiple images (Max 5MB each)</p>
+                        </div>
+                        
+                        <div>
+                            <label for="videoUpload" class="block text-sm font-medium text-gray-700">Upload Video</label>
+                            <input type="file" id="videoUpload" name="videoUpload" accept="video/*"
+                                   class="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <p class="mt-1 text-sm text-gray-500">Upload video evidence (Max 50MB)</p>
+                        </div>
+                        
+                        <div id="previewContainer" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="cancelBtn"
+                            class="px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Cancel
+                    </button>
+                    <button type="submit" id="submitBtn"
+                            class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Submit Complaint
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                    <i class="fas fa-check text-green-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">Complaint Registered Successfully!</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">
+                        Your complaint has been registered successfully. Your Unique Complaint Number (UCN) is:
+                    </p>
+                    <p id="ucnDisplay" class="text-lg font-bold text-blue-600 mt-2"></p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Please save this UCN for future reference.
+                    </p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="downloadReceiptBtn" class="px-4 py-2 bg-blue-600 text-white text-base font-medium rounded-md w-24 mr-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Download
+                    </button>
+                    <button id="trackComplaintBtn" class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md w-24 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        Track
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+    <script>
+        // Check authentication
+        if (!Samadhan.Auth.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+
+        // Load user data
+        const user = Samadhan.Auth.getUser();
+        if (user) {
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('complainantName').value = user.name;
+            document.getElementById('complainantPhone').value = user.phone;
+        }
+
+        // User menu toggle
+        document.getElementById('userMenuBtn').addEventListener('click', function() {
+            document.getElementById('userDropdown').classList.toggle('hidden');
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            Samadhan.Auth.logout();
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.getElementById('userMenu');
+            if (!userMenu.contains(event.target)) {
+                document.getElementById('userDropdown').classList.add('hidden');
+            }
+        });
+
+        // Detect location
+        document.getElementById('detectLocationBtn').addEventListener('click', async function() {
+            const btn = this;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Detecting...';
+            btn.disabled = true;
+
+            try {
+                const position = await Samadhan.GeoLocation.getCurrentPosition();
+                document.getElementById('latitude').value = position.latitude;
+                document.getElementById('longitude').value = position.longitude;
+                Samadhan.Notification.success('Location detected successfully!');
+            } catch (error) {
+                Samadhan.Notification.error('Unable to detect location: ' + error.message);
+            } finally {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }
+        });
+
+        // File preview
+        let uploadedFiles = [];
+        
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            handleFileUpload(e.target.files, 'image');
+        });
+
+        document.getElementById('videoUpload').addEventListener('change', function(e) {
+            handleFileUpload(e.target.files, 'video');
+        });
+
+        function handleFileUpload(files, type) {
+            const previewContainer = document.getElementById('previewContainer');
+            
+            Array.from(files).forEach(file => {
+                try {
+                    if (type === 'image') {
+                        Samadhan.FileUpload.validateImage(file);
+                    } else {
+                        Samadhan.FileUpload.validateVideo(file);
+                    }
+                    
+                    uploadedFiles.push(file);
+                    
+                    // Create preview
+                    const preview = document.createElement('div');
+                    preview.className = 'relative group';
+                    
+                    if (type === 'image') {
+                        Samadhan.FileUpload.previewImage(file, function(src) {
+                            preview.innerHTML = `
+                                <img src="${src}" class="w-full h-32 object-cover rounded-lg">
+                                <button type="button" onclick="removeFile(${uploadedFiles.length - 1})" 
+                                        class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i class="fas fa-times text-xs"></i>
+                                </button>
+                            `;
+                        });
+                    } else {
+                        preview.innerHTML = `
+                            <div class="w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-video text-gray-500 text-2xl"></i>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-1 truncate">${file.name}</p>
+                            <button type="button" onclick="removeFile(${uploadedFiles.length - 1})" 
+                                    class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <i class="fas fa-times text-xs"></i>
+                            </button>
+                        `;
+                    }
+                    
+                    previewContainer.appendChild(preview);
+                } catch (error) {
+                    Samadhan.Notification.error(error.message);
+                }
+            });
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            refreshPreview();
+        }
+
+        function refreshPreview() {
+            const previewContainer = document.getElementById('previewContainer');
+            previewContainer.innerHTML = '';
+            
+            uploadedFiles.forEach((file, index) => {
+                const preview = document.createElement('div');
+                preview.className = 'relative group';
+                
+                if (file.type.startsWith('image/')) {
+                    Samadhan.FileUpload.previewImage(file, function(src) {
+                        preview.innerHTML = `
+                            <img src="${src}" class="w-full h-32 object-cover rounded-lg">
+                            <button type="button" onclick="removeFile(${index})" 
+                                    class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <i class="fas fa-times text-xs"></i>
+                            </button>
+                        `;
+                    });
+                } else {
+                    preview.innerHTML = `
+                        <div class="w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-video text-gray-500 text-2xl"></i>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-1 truncate">${file.name}</p>
+                        <button type="button" onclick="removeFile(${index})" 
+                                class="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fas fa-times text-xs"></i>
+                        </button>
+                    `;
+                }
+                
+                previewContainer.appendChild(preview);
+            });
+        }
+
+        // Form submission
+        document.getElementById('complaintForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            Samadhan.FormValidator.clearAllErrors();
+            
+            const formData = {
+                title: document.getElementById('title').value.trim(),
+                categoryId: document.getElementById('category').value,
+                description: document.getElementById('description').value.trim(),
+                severity: document.querySelector('input[name="severity"]:checked')?.value,
+                address: document.getElementById('address').value.trim(),
+                latitude: document.getElementById('latitude').value || null,
+                longitude: document.getElementById('longitude').value || null,
+                complainantName: document.getElementById('complainantName').value.trim(),
+                complainantPhone: document.getElementById('complainantPhone').value.trim()
+            };
+            
+            // Validation
+            let hasError = false;
+            
+            if (!formData.title) {
+                Samadhan.FormValidator.showError('title', 'Complaint title is required');
+                hasError = true;
+            }
+            
+            if (!formData.categoryId) {
+                Samadhan.FormValidator.showError('category', 'Please select a category');
+                hasError = true;
+            }
+            
+            if (!formData.description || formData.description.length < 10) {
+                Samadhan.FormValidator.showError('description', 'Description must be at least 10 characters');
+                hasError = true;
+            }
+            
+            if (!formData.severity) {
+                Samadhan.FormValidator.showError('severity', 'Please select a severity level');
+                hasError = true;
+            }
+            
+            if (!formData.address) {
+                Samadhan.FormValidator.showError('address', 'Address is required');
+                hasError = true;
+            }
+            
+            if (!formData.complainantName) {
+                Samadhan.FormValidator.showError('complainantName', 'Name is required');
+                hasError = true;
+            }
+            
+            if (!Samadhan.FormValidator.validatePhone(formData.complainantPhone)) {
+                Samadhan.FormValidator.showError('complainantPhone', 'Please enter a valid 10-digit phone number');
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // Show loading
+            const submitBtn = document.getElementById('submitBtn');
+            const originalContent = submitBtn.innerHTML;
+            Samadhan.Loading.show('submitBtn');
+            
+            try {
+                // Create FormData for file upload
+                const submitData = new FormData();
+                submitData.append('title', formData.title);
+                submitData.append('categoryId', formData.categoryId);
+                submitData.append('description', formData.description);
+                submitData.append('severity', formData.severity);
+                submitData.append('address', formData.address);
+                submitData.append('complainantName', formData.complainantName);
+                submitData.append('complainantPhone', formData.complainantPhone);
+                
+                if (formData.latitude) submitData.append('latitude', formData.latitude);
+                if (formData.longitude) submitData.append('longitude', formData.longitude);
+                
+                // Add files
+                uploadedFiles.forEach((file, index) => {
+                    submitData.append(`files[${index}]`, file);
+                });
+                
+                const response = await fetch(`${Samadhan.API.baseURL}/complaints`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('samadhan_token')}`
+                    },
+                    body: submitData
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.message || 'Failed to register complaint');
+                }
+                
+                // Show success modal
+                document.getElementById('ucnDisplay').textContent = result.data.ucn;
+                document.getElementById('successModal').classList.remove('hidden');
+                
+                // Store UCN for tracking
+                localStorage.setItem('last_ucn', result.data.ucn);
+                
+            } catch (error) {
+                document.getElementById('error-message').textContent = error.message || 'Failed to register complaint. Please try again.';
+                document.getElementById('error-message').classList.remove('hidden');
+                
+                // Reset button
+                Samadhan.Loading.hide('submitBtn', originalContent);
+            }
+        });
+
+        // Cancel button
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to cancel? All entered data will be lost.')) {
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Download receipt
+        document.getElementById('downloadReceiptBtn').addEventListener('click', function() {
+            const ucn = document.getElementById('ucnDisplay').textContent;
+            window.print();
+        });
+
+        // Track complaint
+        document.getElementById('trackComplaintBtn').addEventListener('click', function() {
+            window.location.href = 'track-complaint.html';
+        });
+    </script>
+</body>
+</html>

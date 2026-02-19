@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Samadhan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <i class="fas fa-hands-helping text-blue-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-800">Samadhan Admin</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div id="userMenu" class="relative">
+                        <button id="userMenuBtn" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                            <i class="fas fa-user-shield mr-2"></i>
+                            <span id="userName">Admin</span>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                            <a href="complaints.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Complaints</a>
+                            <a href="users.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Users</a>
+                            <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                            <button id="logoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Welcome Section -->
+        <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg p-6 mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold mb-2">Admin Dashboard</h1>
+                    <p class="text-purple-100">Monitor and manage complaint resolution system</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-purple-100">Last updated</p>
+                    <p class="text-lg font-semibold" id="lastUpdated">--:--</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 bg-blue-100 rounded-full">
+                        <i class="fas fa-clipboard-list text-blue-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Total Complaints</p>
+                        <p class="text-2xl font-bold text-gray-900" id="totalComplaints">0</p>
+                        <p class="text-xs text-gray-500 mt-1">
+                            <span id="totalChange" class="text-green-600">+0%</span> from last month
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 bg-yellow-100 rounded-full">
+                        <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Pending</p>
+                        <p class="text-2xl font-bold text-gray-900" id="pendingComplaints">0</p>
+                        <p class="text-xs text-gray-500 mt-1">Awaiting action</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 bg-green-100 rounded-full">
+                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Resolved</p>
+                        <p class="text-2xl font-bold text-gray-900" id="resolvedComplaints">0</p>
+                        <p class="text-xs text-gray-500 mt-1">
+                            <span id="resolutionRate" class="text-green-600">0%</span> resolution rate
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 card-hover">
+                <div class="flex items-center">
+                    <div class="p-3 bg-red-100 rounded-full">
+                        <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Escalated</p>
+                        <p class="text-2xl font-bold text-gray-900" id="escalatedComplaints">0</p>
+                        <p class="text-xs text-gray-500 mt-1">Need attention</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Severity Distribution -->
+            <div class="bg-white shadow-lg rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-bold text-gray-900">Severity Distribution</h2>
+                </div>
+                <div class="p-6">
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-gray-700">High Severity</span>
+                                <span class="text-sm text-gray-600" id="highSeverityCount">0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="highSeverityBar" class="bg-red-500 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-gray-700">Medium Severity</span>
+                                <span class="text-sm text-gray-600" id="mediumSeverityCount">0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="mediumSeverityBar" class="bg-yellow-500 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm font-medium text-gray-700">Low Severity</span>
+                                <span class="text-sm text-gray-600" id="lowSeverityCount">0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="lowSeverityBar" class="bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Distribution -->
+            <div class="bg-white shadow-lg rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-bold text-gray-900">Category Distribution</h2>
+                </div>
+                <div class="p-6">
+                    <div id="categoryChart" class="space-y-3">
+                        <!-- Categories will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="bg-white shadow-lg rounded-lg mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900">Performance Metrics</h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600" id="avgResolutionTime">0h</div>
+                        <p class="text-sm text-gray-600 mt-2">Average Resolution Time</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-600" id="slaCompliance">0%</div>
+                        <p class="text-sm text-gray-600 mt-2">SLA Compliance Rate</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600" id="activeUsers">0</div>
+                        <p class="text-sm text-gray-600 mt-2">Active Users</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="bg-white shadow-lg rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-gray-900">Recent Activities</h2>
+                    <button id="refreshBtn" class="text-blue-600 hover:text-blue-700 text-sm">
+                        <i class="fas fa-sync-alt mr-1"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UCN</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentActivitiesBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Activities will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="noActivities" class="hidden px-6 py-8">
+                <div class="text-center">
+                    <i class="fas fa-clipboard-list text-gray-400 text-4xl mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">No recent activities</h3>
+                    <p class="text-gray-600">No complaint activities in the last 24 hours.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-white rounded-lg shadow p-6 text-center card-hover">
+                <i class="fas fa-plus-circle text-blue-600 text-3xl mb-4"></i>
+                <h3 class="text-lg font-semibold mb-2">New Complaint</h3>
+                <p class="text-gray-600 mb-4">View recent submissions</p>
+                <a href="complaints.html?status=Submitted" class="text-blue-600 hover:text-blue-700 font-medium">
+                    View Now <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 text-center card-hover">
+                <i class="fas fa-exclamation-triangle text-red-600 text-3xl mb-4"></i>
+                <h3 class="text-lg font-semibold mb-2">Escalated</h3>
+                <p class="text-gray-600 mb-4">Handle escalated cases</p>
+                <a href="complaints.html?status=Escalated" class="text-red-600 hover:text-red-700 font-medium">
+                    Handle Now <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 text-center card-hover">
+                <i class="fas fa-users text-green-600 text-3xl mb-4"></i>
+                <h3 class="text-lg font-semibold mb-2">Users</h3>
+                <p class="text-gray-600 mb-4">Manage user accounts</p>
+                <a href="users.html" class="text-green-600 hover:text-green-700 font-medium">
+                    Manage <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 text-center card-hover">
+                <i class="fas fa-cog text-purple-600 text-3xl mb-4"></i>
+                <h3 class="text-lg font-semibold mb-2">Settings</h3>
+                <p class="text-gray-600 mb-4">System configuration</p>
+                <a href="settings.html" class="text-purple-600 hover:text-purple-700 font-medium">
+                    Configure <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Check authentication
+        if (!Samadhan.Auth.isLoggedIn()) {
+            window.location.href = '../login.html';
+        }
+
+        // Load admin data
+        const user = Samadhan.Auth.getUser();
+        if (user) {
+            document.getElementById('userName').textContent = user.username || user.name;
+        }
+
+        // User menu toggle
+        document.getElementById('userMenuBtn').addEventListener('click', function() {
+            document.getElementById('userDropdown').classList.toggle('hidden');
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            Samadhan.Auth.logout();
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.getElementById('userMenu');
+            if (!userMenu.contains(event.target)) {
+                document.getElementById('userDropdown').classList.add('hidden');
+            }
+        });
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                const response = await Samadhan.API.get('/admin/dashboard/stats');
+                
+                if (response.success) {
+                    const stats = response.data;
+                    
+                    // Update stats
+                    document.getElementById('totalComplaints').textContent = stats.total_complaints || 0;
+                    document.getElementById('pendingComplaints').textContent = (stats.submitted + stats.under_review + stats.assigned + stats.in_progress) || 0;
+                    document.getElementById('resolvedComplaints').textContent = stats.resolved || 0;
+                    document.getElementById('escalatedComplaints').textContent = stats.escalated || 0;
+                    
+                    // Update resolution rate
+                    const resolutionRate = stats.total_complaints > 0 ? 
+                        Math.round((stats.resolved / stats.total_complaints) * 100) : 0;
+                    document.getElementById('resolutionRate').textContent = resolutionRate + '%';
+                    
+                    // Update severity distribution
+                    updateSeverityDistribution(stats.severity);
+                    
+                    // Update category distribution
+                    updateCategoryDistribution(stats.categories);
+                    
+                    // Update performance metrics
+                    document.getElementById('avgResolutionTime').textContent = stats.avgResolutionHours + 'h';
+                    document.getElementById('slaCompliance').textContent = '85%'; // Placeholder
+                    document.getElementById('activeUsers').textContent = '1,234'; // Placeholder
+                    
+                    // Update last updated time
+                    document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString('en-IN');
+                }
+                
+                // Load recent activities
+                await loadRecentActivities();
+                
+            } catch (error) {
+                console.error('Failed to load dashboard data:', error);
+                Samadhan.Notification.error('Failed to load dashboard data');
+            }
+        }
+
+        // Update severity distribution
+        function updateSeverityDistribution(severity) {
+            const total = severity.high + severity.medium + severity.low;
+            
+            if (total > 0) {
+                document.getElementById('highSeverityCount').textContent = severity.high;
+                document.getElementById('highSeverityBar').style.width = (severity.high / total * 100) + '%';
+                
+                document.getElementById('mediumSeverityCount').textContent = severity.medium;
+                document.getElementById('mediumSeverityBar').style.width = (severity.medium / total * 100) + '%';
+                
+                document.getElementById('lowSeverityCount').textContent = severity.low;
+                document.getElementById('lowSeverityBar').style.width = (severity.low / total * 100) + '%';
+            }
+        }
+
+        // Update category distribution
+        function updateCategoryDistribution(categories) {
+            const categoryChart = document.getElementById('categoryChart');
+            categoryChart.innerHTML = '';
+            
+            categories.forEach(category => {
+                const categoryItem = document.createElement('div');
+                categoryItem.className = 'flex items-center justify-between';
+                
+                const percentage = Math.round((category.count / categories.reduce((sum, cat) => sum + cat.count, 0)) * 100);
+                
+                categoryItem.innerHTML = `
+                    <span class="text-sm text-gray-700">${category.name}</span>
+                    <div class="flex items-center">
+                        <div class="w-24 bg-gray-200 rounded-full h-2 mr-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                        <span class="text-sm text-gray-600">${category.count}</span>
+                    </div>
+                `;
+                
+                categoryChart.appendChild(categoryItem);
+            });
+        }
+
+        // Load recent activities
+        async function loadRecentActivities() {
+            try {
+                const response = await Samadhan.API.get('/admin/complaints?limit=10');
+                
+                if (response.success && response.data.complaints.length > 0) {
+                    displayRecentActivities(response.data.complaints);
+                } else {
+                    document.getElementById('noActivities').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Failed to load recent activities:', error);
+            }
+        }
+
+        // Display recent activities
+        function displayRecentActivities(activities) {
+            const tbody = document.getElementById('recentActivitiesBody');
+            tbody.innerHTML = '';
+            
+            activities.forEach(activity => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                
+                const statusBadgeClass = getStatusBadgeClass(activity.status);
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        ${activity.ucn}
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-900">
+                        <div class="max-w-xs truncate" title="${activity.title}">
+                            ${activity.title}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge ${statusBadgeClass}">
+                            ${activity.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        ${activity.user_name}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        ${Samadhan.DateUtils.getTimeAgo(activity.updated_at)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="viewComplaint(${activity.id})" class="text-blue-600 hover:text-blue-900">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Get status badge class
+        function getStatusBadgeClass(status) {
+            const statusMap = {
+                'Submitted': 'status-submitted',
+                'Under Review': 'status-under-review',
+                'Assigned to Authority': 'status-assigned',
+                'In Progress': 'status-in-progress',
+                'Resolved': 'status-resolved',
+                'Escalated': 'status-escalated'
+            };
+            return statusMap[status] || 'status-submitted';
+        }
+
+        // View complaint details
+        function viewComplaint(complaintId) {
+            window.location.href = `complaint-detail.html?id=${complaintId}`;
+        }
+
+        // Refresh dashboard
+        document.getElementById('refreshBtn').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Refreshing...';
+            loadDashboardData().finally(() => {
+                this.innerHTML = '<i class="fas fa-sync-alt mr-1"></i> Refresh';
+            });
+        });
+
+        // Auto-refresh every 5 minutes
+        setInterval(loadDashboardData, 5 * 60 * 1000);
+
+        // Initialize dashboard
+        loadDashboardData();
+    </script>
+</body>
+</html>
